@@ -1,0 +1,6 @@
+{
+    "dotnet.defaultSolution": "FallGuysSample.sln",
+    "files.exclude": {
+        "**/*.meta": true
+      }
+}
