@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -19,6 +16,11 @@ public class BoardUnit : MonoBehaviour, IPointerClickHandler
         image = GetComponent<Image>();
     }
 
+    private void Start()
+    {
+        GameBoardController.Instance.OnGameWin += HandleGameWin;   
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if(!isInteractable)
@@ -28,13 +30,17 @@ public class BoardUnit : MonoBehaviour, IPointerClickHandler
         GameBoardController.Instance.HandleOnInteracted(this);
     }
 
-    public void SetImage(Sprite image)
+    public void RestartUnit()
     {
-        this.image.sprite = image;
+        SetImage(null);
+        SetType(null);
+        isInteractable = true;
     }
 
-    public void SetType(int target) => this.type = target;
-    public int? GetType => type;
+    public void SetImage(Sprite image) => this.image.sprite = image;
+    public void HandleGameWin(bool isFirstPlayerWin) => isInteractable = false;
+    public void SetType(int? target) => this.type = target;
+    public int? Type => type;
     
     
 }
