@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class GameBoardController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameBoardController : MonoBehaviour
     public static GameBoardController Instance;
 
     public UnityAction<bool> OnGameWin {get; set;}
+    public UnityAction OnGameDraw {get; set;}
 
     private bool isFirstPlayerTurn = true;
     private void Awake()
@@ -42,6 +44,13 @@ public class GameBoardController : MonoBehaviour
         {
             OnGameWin?.Invoke(isFirstPlayerTurn);
         }
+        else
+        {
+            bool isDraw = boardUnits.All(x => !x.IsInteractable);
+
+            if(isDraw)
+                OnGameDraw?.Invoke();
+        }
         
         isFirstPlayerTurn = !isFirstPlayerTurn;
     }
@@ -52,71 +61,70 @@ public class GameBoardController : MonoBehaviour
     */
     private bool CheckWin(BoardUnit unit)
     {
-        int? type = unit.Type;
         switch (boardUnits.IndexOf(unit))
         {
             case 0:
-                if (type == boardUnits[1].Type && type == boardUnits[2].Type)
+                if (unit == boardUnits[1] && unit == boardUnits[2])
                     return true;
-                if (type == boardUnits[3].Type && type == boardUnits[6].Type)
+                if (unit == boardUnits[3] && unit == boardUnits[6])
                     return true;
-                if (type == boardUnits[4].Type && type == boardUnits[8].Type)
+                if (unit == boardUnits[4] && unit == boardUnits[8])
                     return true;
                 break;
             case 1:
-                if (type == boardUnits[0].Type && type == boardUnits[2].Type)
+                if (unit == boardUnits[0] && unit == boardUnits[2])
                     return true;
-                if (type == boardUnits[4].Type && type == boardUnits[7].Type)
+                if (unit == boardUnits[4] && unit == boardUnits[7])
                     return true;
                 break;
             case 2:
-                if (type == boardUnits[1].Type && type == boardUnits[0].Type)
+                if (unit == boardUnits[1] && unit == boardUnits[0])
                     return true;
-                if (type == boardUnits[5].Type && type == boardUnits[8].Type)
+                if (unit == boardUnits[5] && unit == boardUnits[8])
                     return true;
-                if (type == boardUnits[4].Type && type == boardUnits[6].Type)
+                if (unit == boardUnits[4] && unit == boardUnits[6])
                     return true;
                 break;
             case 3:
-                if (type == boardUnits[0].Type && type == boardUnits[6].Type)
+                if (unit == boardUnits[0] && unit == boardUnits[6])
                     return true;
-                if (type == boardUnits[4].Type && type == boardUnits[6].Type)
+                if (unit == boardUnits[4] && unit == boardUnits[6])
                     return true;
                 break;
             case 4:
-                if (type == boardUnits[3].Type && type == boardUnits[5].Type)
+                if (unit == boardUnits[3] && unit == boardUnits[5])
                     return true;
-                if (type == boardUnits[1].Type && type == boardUnits[7].Type)
+                if (unit == boardUnits[1] && unit == boardUnits[7])
                     return true;
-                if (type == boardUnits[0].Type && type == boardUnits[8].Type)
+                if (unit == boardUnits[0] && unit == boardUnits[8])
                     return true;
                 break;
             case 5:
-                if (type == boardUnits[3].Type && type == boardUnits[4].Type)
+                if (unit == boardUnits[3] && unit == boardUnits[4])
                     return true;
-                if (type == boardUnits[2].Type && type == boardUnits[8].Type)
+                if (unit == boardUnits[2] && unit == boardUnits[8])
                     return true;
                 break;
             case 6:
-                if (type == boardUnits[0].Type && type == boardUnits[3].Type)
+                if (unit == boardUnits[0] && unit == boardUnits[3])
                     return true;
-                if (type == boardUnits[7].Type && type == boardUnits[8].Type)
+                if (unit == boardUnits[7] && unit == boardUnits[8])
                     return true;
-                if (type == boardUnits[2].Type && type == boardUnits[4].Type)
+                if (unit == boardUnits[2] && unit == boardUnits[4])
                     return true;
                 break;
             case 7:
-                if (type == boardUnits[1].Type && type == boardUnits[4].Type)
+                if (unit == boardUnits[1] && unit == boardUnits[4])
                     return true;
-                if (type == boardUnits[6].Type && type == boardUnits[8].Type)
+                if (unit == boardUnits[6] && unit == boardUnits[8])
                     return true;
                 break;
             case 8:
-                if (type == boardUnits[6].Type && type == boardUnits[7].Type)
+                if (unit == boardUnits[6] && unit == boardUnits[7])
                     return true;
-                if (type == boardUnits[0].Type && type == boardUnits[4].Type)
+                if (unit == boardUnits[0] && unit == boardUnits[4])
                     return true;
-                if (type == boardUnits[2].Type && type == boardUnits[5].Type)
+                if (unit == boardUnits[2] && unit == boardUnits[5])
                     return true;
                 break;
             

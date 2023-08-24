@@ -10,7 +10,8 @@ public class BoardUnit : MonoBehaviour, IPointerClickHandler
     private Image image;
     private int? type = null;
     public static UnityAction<BoardUnit> OnInteracted { get; set;}
-
+    
+    
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -41,6 +42,27 @@ public class BoardUnit : MonoBehaviour, IPointerClickHandler
     public void HandleGameWin(bool isFirstPlayerWin) => isInteractable = false;
     public void SetType(int? target) => this.type = target;
     public int? Type => type;
-    
-    
+    public bool IsInteractable => isInteractable;
+
+
+    public static bool operator ==(BoardUnit unit1, BoardUnit unit2)
+    {
+        return unit1.Type == unit2.Type;
+    }
+
+    public static bool operator !=(BoardUnit unit1, BoardUnit unit2)
+    {
+        return unit1.Type != unit2.Type;
+    }
+
+    public override bool Equals(object obj)
+    {
+        BoardUnit unit = obj as BoardUnit;
+        return this == unit;
+    }
+
+    public override int GetHashCode()
+    {
+        return this.Type.GetHashCode();
+    }
 }
